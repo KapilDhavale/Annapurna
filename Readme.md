@@ -3,6 +3,8 @@ This command retrieves donations near latitude 12.9716 and longitude 77.5946 wit
 
 
 curl -X GET "http://localhost:5000/api/donations/near?lat=12.9716&lon=77.5946&radius=1000" -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YzFkMjJiZjc1NTE3OWVkNjBlMzQyOSIsImlhdCI6MTc0MDc2MDA5OSwiZXhwIjoxNzQwODQ2NDk5fQ.gr0fRdVVc9CWk2VlNiFq4Pja_6o6_pfrzDS9jdZMCoY"
+
+
 2. Update Donation Status
 This command updates the status of a donation to "matched".
 Replace the donation ID (67c1dd7ab4641649daea0d20) with the actual donation ID you wish to update.
