@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import LogoutButton from "../components/LogoutButton";
+import { jwtDecode } from "jwt-decode"; // Import jwtDecode
 
 const ReceiverDashboard = () => {
   const [donations, setDonations] = useState([]);
   const [location, setLocation] = useState({ lat: null, lon: null });
+
+  // Get logged-in user's name from JWT token
+  let userName = "Receiver";
+  const token = localStorage.getItem("token");
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      userName = decoded.username || userName;
+    } catch (error) {
+      console.error("Error decoding token:", error);
+    }
+  }
 
   useEffect(() => {
     // Get user's current location
@@ -25,7 +38,11 @@ const ReceiverDashboard = () => {
           })
           .then((response) => {
             console.log("Nearby Donations:", response.data);
-            setDonations(response.data);
+            // Remove duplicate donations by _id
+            const uniqueDonations = response.data.filter((donation, index, self) =>
+              index === self.findIndex((d) => d._id === donation._id)
+            );
+            setDonations(uniqueDonations);
           })
           .catch((error) => {
             console.error(
@@ -38,12 +55,12 @@ const ReceiverDashboard = () => {
     );
   }, []);
 
-  // Accept a donation
+  // Accept a donation and update its status to "matched"
   const handleAcceptDonation = (donationId) => {
     axios
       .put(
-        `http://localhost:5000/api/donations/${donationId}`, 
-        { status: "matched" }, // Update status to matched
+        `http://localhost:5000/api/donations/${donationId}`,
+        { status: "matched" },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -52,6 +69,7 @@ const ReceiverDashboard = () => {
       )
       .then((response) => {
         alert("Donation accepted successfully!");
+        // Update donation list with the new status
         setDonations((prevDonations) =>
           prevDonations.map((donation) =>
             donation._id === donationId ? { ...donation, status: "matched" } : donation
@@ -59,7 +77,10 @@ const ReceiverDashboard = () => {
         );
       })
       .catch((error) => {
-        console.error("Error accepting donation:", error.response ? error.response.data : error.message);
+        console.error(
+          "Error accepting donation:",
+          error.response ? error.response.data : error.message
+        );
       });
   };
 
@@ -67,7 +88,7 @@ const ReceiverDashboard = () => {
     <div>
       <h1>Receiver Dashboard</h1>
       <LogoutButton />
-      <p>Welcome, Receiver! Explore available donations near you:</p>
+      <p>Welcome, {userName}! Explore available donations near you:</p>
       <p>
         Your Coordinates: <strong>Lat:</strong> {location.lat} | <strong>Lon:</strong> {location.lon}
       </p>
@@ -77,10 +98,8 @@ const ReceiverDashboard = () => {
         <ul>
           {donations.map((donation) => (
             <li key={donation._id}>
-              <strong>{donation.foodDetails.foodType}</strong>:{" "}
-              {donation.foodDetails.description} <br />
-              Quantity: {donation.foodDetails.quantity} | Status:{" "}
-              {donation.status} <br />
+              <strong>{donation.foodDetails.foodType}</strong>: {donation.foodDetails.description} <br />
+              Quantity: {donation.foodDetails.quantity} | Status: {donation.status} <br />
               Pickup: {donation.pickupLocation.address} <br />
               {donation.status === "pending" && (
                 <button onClick={() => handleAcceptDonation(donation._id)}>

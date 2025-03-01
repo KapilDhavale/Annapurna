@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const FoodDonationSchema = new mongoose.Schema({
   donor: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Refers to the User model
+    ref: 'User',
     required: true,
   },
   foodDetails: {
-    foodType: { type: String, required: true }, // e.g., "Vegetarian Meal", "Dairy Products"
-    description: { type: String, required: true }, // Additional info about the food
-    quantity: { type: Number, required: true }, // Number of servings or kilograms
-    expiryDate: { type: Date, required: true }, // When the food is expected to expire
-    packaged: { type: Boolean, default: false }, // Whether the food is properly packaged
+    foodType: { type: String, required: true },
+    description: { type: String, required: true },
+    quantity: { type: Number, required: true },
+    expiryDate: { type: Date, required: true },
+    packaged: { type: Boolean, default: false },
   },
   pickupLocation: {
     type: {
@@ -20,31 +20,30 @@ const FoodDonationSchema = new mongoose.Schema({
       default: 'Point',
     },
     coordinates: {
-      type: [Number], // Format: [longitude, latitude]
+      type: [Number],
       required: true,
     },
-    address: { type: String, required: true }, // Human-readable address
+    address: { type: String, required: true },
   },
   status: {
     type: String,
-    enum: ['pending', 'matched', 'picked', 'delivered', 'expired', 'cancelled'],
+    enum: ['pending', 'matched', 'scheduled', 'picked', 'delivered', 'expired', 'cancelled'],
     default: 'pending',
   },
   receiver: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Assigned receiver (NGO, individual, etc.)
-    default: null,
-  },
-  assignedDriver: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // The driver picking up the donation (if applicable)
+    ref: 'User',
     default: null,
   },
   donationTime: { 
     type: Date, 
     default: Date.now, 
   },
-  pickupTime: { 
+  scheduledPickupTime: { 
+    type: Date, 
+    default: null, 
+  },
+  actualPickupTime: { 
     type: Date, 
     default: null, 
   },
@@ -56,5 +55,10 @@ const FoodDonationSchema = new mongoose.Schema({
 
 // Create a geospatial index on pickupLocation for efficient location queries
 FoodDonationSchema.index({ pickupLocation: '2dsphere' });
+
+// Delete the model from the cache if it exists so that the new schema is used
+if (mongoose.models.FoodDonation) {
+  delete mongoose.models.FoodDonation;
+}
 
 module.exports = mongoose.model('FoodDonation', FoodDonationSchema);

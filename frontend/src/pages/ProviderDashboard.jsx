@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import LogoutButton from "../components/LogoutButton";
+import {jwtDecode}from "jwt-decode";
 
 const ProviderDashboard = () => {
   const [donations, setDonations] = useState([]);
@@ -15,11 +16,23 @@ const ProviderDashboard = () => {
     longitude: "",
   });
 
+  // Decode the token to get the username
+  let userName = "Provider";
+  const token = localStorage.getItem("token");
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+      userName = decoded.username || userName;
+    } catch (error) {
+      console.error("Error decoding token:", error);
+    }
+  }
+
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/donations", {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -31,7 +44,7 @@ const ProviderDashboard = () => {
           error.response ? error.response.data : error.message
         );
       });
-  }, []);
+  }, [token]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -43,7 +56,6 @@ const ProviderDashboard = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
 
     const donationData = {
       foodDetails: {
@@ -88,7 +100,7 @@ const ProviderDashboard = () => {
     <div>
       <h1>Provider Dashboard</h1>
       <LogoutButton />
-      <p>Welcome, Provider! Manage your donations below:</p>
+      <p>Welcome, {userName}! Manage your donations below:</p>
 
       <h2>Create a Donation</h2>
       <form onSubmit={handleSubmit}>

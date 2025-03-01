@@ -32,14 +32,17 @@ exports.createDonation = async (req, res) => {
 };
 
 // Retrieve all donations
+// Retrieve donations created by the logged-in user (provider)
 exports.getDonations = async (req, res) => {
   try {
-    const donations = await FoodDonation.find().populate('donor', 'username email');
+    const donations = await FoodDonation.find({ donor: req.user.id })
+      .populate('donor', 'username email');
     res.json(donations);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Update donation status
 exports.updateDonationStatus = async (req, res) => {
@@ -63,29 +66,28 @@ exports.updateDonationStatus = async (req, res) => {
 };
 
 // Retrieve donations near a location
+// Retrieve donations near a location
 exports.getDonationsNear = async (req, res) => {
   const { lat, lon, radius } = req.query;
-
   if (!lat || !lon || !radius) {
     return res.status(400).json({ error: "Please provide lat, lon, and radius as query parameters" });
   }
-
   try {
     const donations = await FoodDonation.find({
-      status: { $in: ["pending", "matched"] }, // Show only available donations
+      status: { $in: ["pending", "matched"] }, // or filter only "pending" if that’s your intent
       pickupLocation: {
         $near: {
           $geometry: { type: "Point", coordinates: [parseFloat(lon), parseFloat(lat)] },
-          $maxDistance: parseInt(radius), // Radius in meters
+          $maxDistance: parseInt(radius),
         },
       },
     }).populate('donor', 'username email');
-
     res.json(donations);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 
 // Assign a driver to a donation
