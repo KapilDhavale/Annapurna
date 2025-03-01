@@ -18,3 +18,11 @@ Replace the donation ID and driver ID with the actual IDs from your system.
 
 
 curl -X PUT "http://localhost:5000/api/donations/assign/67c1dd7ab4641649daea0d20" -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YzFkMjJiZjc1NTE3OWVkNjBlMzQyOSIsImlhdCI6MTc0MDc2MDA5OSwiZXhwIjoxNzQwODQ2NDk5fQ.gr0fRdVVc9CWk2VlNiFq4Pja_6o6_pfrzDS9jdZMCoY" -d "{\"driverId\":\"67c1d22bf755179ed60e3429\"}"
+
+
+.setLngLat([72.8860212, 19.081258])
+DBIT coords
+
+
+sahara hotel
+19.0817655,72.8785177

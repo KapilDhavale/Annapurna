@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import ProviderDashboard from './pages/ProviderDashboard';
 import ReceiverDashboard from './pages/ReceiverDashboard';
 import AdminDashboard from './pages/AdminDashboard';
+import MapsPage from './components/MapsPage';
 import { AuthProvider } from './context/AuthContext.jsx';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/provider-dashboard" element={<ProviderDashboard />} />
           <Route path="/receiver-dashboard" element={<ReceiverDashboard />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/maps" element={<MapsPage />} />
         </Routes>
       </Router>
     </AuthProvider>

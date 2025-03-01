@@ -10,12 +10,20 @@ exports.createDonation = async (req, res) => {
   }
 
   try {
+    // Assume the client sends coordinates as [latitude, longitude]
+    // Swap them to store as [longitude, latitude]
+    const originalCoordinates = pickupLocation.coordinates;
+    const correctedCoordinates = [
+      parseFloat(originalCoordinates[1]),
+      parseFloat(originalCoordinates[0])
+    ];
+
     const donation = new FoodDonation({
       donor: req.user.id, // Changed _id to id
       foodDetails,
       pickupLocation: {
         type: 'Point',
-        coordinates: pickupLocation.coordinates,
+        coordinates: correctedCoordinates,
         address: pickupLocation.address,
       },
     });
@@ -31,8 +39,7 @@ exports.createDonation = async (req, res) => {
   }
 };
 
-// Retrieve all donations
-// Retrieve donations created by the logged-in user (provider)
+// Retrieve all donations (created by the logged-in provider)
 exports.getDonations = async (req, res) => {
   try {
     const donations = await FoodDonation.find({ donor: req.user.id })
@@ -42,7 +49,6 @@ exports.getDonations = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
 
 // Update donation status
 exports.updateDonationStatus = async (req, res) => {
@@ -66,15 +72,15 @@ exports.updateDonationStatus = async (req, res) => {
 };
 
 // Retrieve donations near a location
-// Retrieve donations near a location
 exports.getDonationsNear = async (req, res) => {
   const { lat, lon, radius } = req.query;
   if (!lat || !lon || !radius) {
     return res.status(400).json({ error: "Please provide lat, lon, and radius as query parameters" });
   }
   try {
+    // Make sure that the coordinates in the query and in the DB follow [lon, lat] order.
     const donations = await FoodDonation.find({
-      status: { $in: ["pending", "matched"] }, // or filter only "pending" if that’s your intent
+      status: { $in: ["pending", "matched"] },
       pickupLocation: {
         $near: {
           $geometry: { type: "Point", coordinates: [parseFloat(lon), parseFloat(lat)] },
@@ -87,8 +93,6 @@ exports.getDonationsNear = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
-
 
 // Assign a driver to a donation
 exports.assignDriver = async (req, res) => {
