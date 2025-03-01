@@ -1,9 +1,15 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import { useNavigate,  } from "react-router-dom";
 import "./LandingPage.css"; // Update the CSS filename if necessary
+import {FaBell } from "react-icons/fa"; // Importing icons
+import logo_dark from "../images/logo_dark.png";
+import hero from "../images/hero.jpg";
+import About from "../components/About.jsx";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  // eslint-disable-next-line no-undef
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleButtonClick = () => {
     navigate("/login");
@@ -11,56 +17,91 @@ const LandingPage = () => {
 
   return (
     <div>
+      {/* Navbar Section */}
+      <nav className="navbar" >
+        <div className="nav-left">
+          <img src={logo_dark} alt="Logo" className="logo" style={{ width:"150px", height:"auto"}}/>
+        </div>
+
+        {/* Right Side - Icons */}
+      <div className="nav-icons">
+        <FaBell className="icon" />
+        <button className="nav-button" onClick={() => navigate("/register")}>Register</button>
+        <button className="nav-button" onClick={() => navigate("/login")}>Login</button>
+      </div>
+
+        {/* <div className="nav-right">
+          <FaBell className="nav-icon" />
+          <FaUserCircle className="nav-icon" onClick={() => navigate("/profile")} />
+          <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <FaTimes /> : <FaBars />}
+          </div>
+        </div> */}
+      </nav>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="mobile-menu">
+          <button onClick={() => navigate("/home")}>Home</button>
+          <button onClick={() => navigate("/profile")}>Profile</button>
+          <button onClick={() => navigate("/login")}>Log Out</button>
+        </div>
+      )}
+
       {/* Hero Section */}
       <div className="container">
-        <img src="/law-bg.jpg" alt="homepage-law" className="image" />
+        <img src={hero} alt="homepage-law" className="image" />
         <div className="home-darkcover">
-          <div className="title">BLOCKCHAIN BASED e-VAULT</div>
-          <button id="startButton" onClick={handleButtonClick} className="button">
-            <span>GET STARTED</span>
-          </button>
+          <div className="title">Serving Hope, 
+            <div> One Plate at a Time</div>
+          </div>
         </div>
       </div>
 
-      {/* About Section */}
-      <section id="about">
-        <div id="about-head">ABOUT</div>
-        <div id="about-para">
-          Powered by Ethereum blockchain, our platform offers a secure, immutable, and transparent
-          solution for storing and managing legal documents. Whether you're a lawyer safeguarding
-          your client's files or a client ensuring the protection of your legal records, this platform
-          provides the perfect blend of security and ease of access.
-        </div>
-      </section>
+      <About/>
 
       {/* Features Section */}
       <section id="features">
         <div id="feature-head">FEATURES</div>
         <div className="feature-grid">
           <div className="feature-box">
-            <img src="/secure-img.png" alt="Secure Document Storage" className="feature-icon" />
-            Secure Document Storage
+            <img src="/secure-img.png" alt="Real-Time Donation Tracking" className="feature-icon" />
+            Real-Time Donation Tracking
           </div>
           <div className="feature-box">
-            <img src="/integrity-bg.png" alt="Immutability & Integrity" className="feature-icon" />
-            Immutability & Integrity
+            <img src="/integrity-bg.png" alt="Verified Beneficiary Network" className="feature-icon" />
+            Verified Beneficiary Network
           </div>
           <div className="feature-box">
-            <img src="/user-access-img.png" alt="User Access Control" className="feature-icon" />
-            User Access Control
+            <img src="/user-access-img.png" alt="Secure Payment Integration" className="feature-icon" />
+            Secure Payment Integration
           </div>
           <div className="feature-box">
-            <img src="/transparency-img.png" alt="Transparency & Auditability" className="feature-icon" />
-            Transparency & Auditability
+            <img src="/transparency-img.png" alt="Automated Matching System" className="feature-icon" />
+            Automated Matching System
           </div>
           <div className="feature-box">
-            <img src="/doc-retrieval-img.png" alt="Easy Document Retrieval" className="feature-icon" />
-            Easy Document Retrieval
+            <img src="/doc-retrieval-img.png" alt="Impact Reporting & Analytics" className="feature-icon" />
+            Impact Reporting & Analytics
           </div>
           <div className="feature-box">
-            <img src="/ethereum-security-img.png" alt="Ethereum Blockchain Security" className="feature-icon" />
-            Ethereum Blockchain Security
+            <img src="/ethereum-security-img.png" alt="User-Friendly Interface" className="feature-icon" />
+            User-Friendly Interface
           </div>
+        </div>
+
+        {/* Maps Section */}
+        <div className="map-container">
+          <iframe
+            title="Map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345096867!2d144.9537353153177!3d-37.81627927975166!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf5774c0f2f2f2f2f!2sMelbourne%20Central!5e0!3m2!1sen!2sau!4v1617739802348!5m2!1sen!2sau"
+            // width="600"
+            // height="450"
+            // style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </section>
 

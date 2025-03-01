@@ -1,3 +1,4 @@
+/* General Reset */
 html,
 body {
     margin: 0;
@@ -6,172 +7,227 @@ body {
     width: 100%;
 }
 
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 40px;
+    align-items: center;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* Left side (logo) */
+.nav-left .nav-logo {
+    width: 50px;
+    height: auto;
+}
+
+/* Center (search bar) */
+.nav-center {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    max-width: 500px;
+    position: relative;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #fff;
+    border-radius: 5px;
+    background: #000000;
+    color: white;
+    padding-right: 40px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Right side (icons) */
+.nav-right {
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+/* Navbar Icons */
+.nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    /* Space between icons */
+    padding-right: 40px;
+    /* Padding for the whole icon section */
+}
+
+/* Styling for Register & Login Buttons */
+.nav-button {
+    background-color: #ff9800;
+    /* Orange color */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #e68900;
+    /* Darker orange on hover */
+}
+
+/* Individual Icon Styling */
+.nav-icons .icon {
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Add Padding to the Right Side of Profile Icon */
+.nav-icons .icon:last-child {
+    padding-right: 30px;
+}
+
+
+/* Mobile menu */
+.menu-icon {
+    display: none;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.mobile-menu {
+    display: flex;
+    flex-direction: column;
+    background: #222;
+    padding: 10px;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    width: 150px;
+}
+
+.mobile-menu button {
+    background: none;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.mobile-menu button:hover {
+    background: #444;
+}
+
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .nav-icons {
+        gap: 15px;
+        padding-right: 10px;
+        /* Reduce padding for mobile */
+    }
+
+    .nav-center {
+        display: none;
+    }
+
+    .menu-icon {
+        display: block;
+    }
+}
+
+
+/* Fullscreen Container */
 .container {
     position: relative;
     width: 100vw;
     height: 100vh;
-    /* overflow: hidden; */
 }
 
+/* Background Image */
 .image {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* Ensures the image covers the entire screen */
 }
 
+/* Dark Overlay */
 .home-darkcover {
     position: absolute;
-    /* Ensure it covers the entire container */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.65);
-    /* Reduced dark overlay */
+    background-color: rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
-    /* Stack title and button vertically */
     justify-content: center;
-    /* Center vertically */
     align-items: center;
-    /* Center horizontally */
 }
 
-
+/* Title */
 .title {
-    width: auto;
-    position: absolute;
+    width: 90%;
     color: #ffffff;
-    top: 30%;
-    font-size: 6vw;
-    /* background-color: aqua; */
-    display: flex;
-    justify-content: center;
-    font-family: "Intro Rust";
-    font-weight: 1000;
-}
-
-#startButton {
-    padding: 10px 10px;
-    width: 18vw;
-    font-size: 1.4em;
-    font-family: "Intro Rust";
-    font-weight: 600;
-    letter-spacing: 1px;
-    background-color: #ffffff;
-    /* Button background color */
-    color: #000000;
-    /* Button text color */
-    border: none;
-    /* No border */
-    border-radius: 10px;
-    /* Rounded corners */
-    cursor: pointer;
-    /* Pointer cursor on hover */
+    font-size: 5vw;
+    /* Responsive font size */
+    text-align: center;
+    font-family: "Intro Rust", sans-serif;
+    font-weight: 750;
     position: absolute;
-    top: 60%;
-    left: 80%;
-    transform: translate(-20%, -5%);
-    /* Center the button */
-    transition: color 0.3s ease;
-    overflow: hidden;
-    /* Prevent overflow from animation */
+    top: 40%;
 }
 
-/* The black ball effect */
-#startButton::before {
-    content: "";
-    position: absolute;
-    width: 150%;
-    height: 300%;
-    background-color: #000;
-    border-radius: 50%;
-    bottom: -350%;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: bottom 0.8s ease-in-out;
-    z-index: 0;
-    /* Ensure the ball stays behind */
-}
 
-/* When hovered, bring the black ball up */
-#startButton:hover::before {
-    bottom: -50%;
-}
-
-#startButton:hover {
-    color: #ffffff;
-    border: none;
-    /* Change text color when hovered */
-}
-
-/* Ensure text stays above the effect */
-#startButton span {
-    position: relative;
-    z-index: 6;
-    /* Higher z-index than the black ball */
-}
-
-#about {
-    background: linear-gradient(180deg, #d0c7b4, #c2ae85);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 60vh;
-    /* padding: ; */
-}
-
-#about-head {
-    /* background-color: aquamarine; */
-    padding: 10px;
-    font-weight: 800;
-    letter-spacing: 2px;
-    font-size: 2em;
-}
-
-#about-para {
-    /* background-color: aqua; */
-    width: 90vw;
-    padding: 20px 0;
-    font-size: 2em;
-    text-align: justify;
-}
-
+/* Features Section */
 #features {
-    width: 100vw;
-    height: fit-content;
+    width: 100%;
     background: linear-gradient(180deg, #90cad4, #1d99af);
     padding: 30px 0px;
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+#feature-head {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
 }
 
 .feature-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    /* 2 columns */
-    gap: 60px 100px;
-    /* Spacing between boxes */
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    max-width: 800px;
-    /* Adjust as needed */
+    grid-template-columns: 1fr;
+    /* Single column for mobile */
+    gap: 20px;
+    width: 90%;
     margin: auto;
-    padding: 20px;
 }
 
 .feature-box {
     background-color: white;
     padding: 20px;
-    height: 200px;
-    width: 270px;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
@@ -180,130 +236,130 @@ body {
     align-items: center;
 }
 
-#feature-head {
-    /* background-color: aquamarine; */
-    display: flex;
-    justify-content: center;
-    font-size: 2.5em;
-    font-weight: 700;
+/*Map Section*/
+.map-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    text-align: center;
 }
 
-#feature-head img {
-    width: 300px;
-    height: 300px;
+.map-container iframe {
+    width: 100%;
+    height: 450px;
+    border: 0;
+    border-radius: 10px;
 }
 
+/* Responsive Layouts */
+
+/* For Tablets & Smaller Desktops */
+@media screen and (max-width: 1024px) {
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* For Mobile Devices */
+@media screen and (max-width: 768px) {
+    #features {
+        padding: 20px 5px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .map-container iframe {
+        height: 300px;
+    }
+}
+
+
+/* Support Section */
 .support-center {
-    /* padding: 50px 20px; */
     justify-content: center;
     align-items: center;
     background: linear-gradient(225deg, #2c3e50 0%, #27425d 19%, #648db6 100%);
     color: white;
+    text-align: center;
+    padding: 30px 10px;
 }
 
 #support-head {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 2em;
+    font-size: 1.8rem;
     font-weight: 700;
-    padding: 30px 0px;
+    margin-bottom: 20px;
 }
 
 #support-para {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 1.2em;
-    /* padding: 40px 0px; */
+    font-size: 1.2rem;
 }
 
+/* Support Grid */
 .support-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1px 100px;
-    max-width: 90vw;
-    margin: 0px auto;
-    /* background-color: aqua; */
+    grid-template-columns: 1fr;
+    /* Single column for mobile */
+    gap: 20px;
+    max-width: 90%;
+    margin: auto;
 }
 
 .support-box {
-    /* background: rgba(255, 255, 255, 0.1); */
-    padding: 50px 40px;
-    /* border-radius: 10px; */
-    text-align: center;
+    padding: 30px;
     border-bottom: 1px solid white;
-    /* box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2); */
-    /* width: 400px; */
 }
 
-.support-box p i {
-    font-size: 1.4em;
-}
-
-.support-box img {
-    width: 90px;
-}
-
-.support-icon {
-    width: 50px;
-    margin-bottom: 10px;
-}
-
+/* Footer */
 .footer {
     display: flex;
+    flex-direction: column;
     background: black;
-    padding: 15px;
-    margin-top: 40px;
-    justify-content: space-evenly;
+    padding: 20px;
     align-items: center;
-    font-size: 1.4em;
-    height: 90px;
+    font-size: 1.2rem;
+    gap: 10px;
 }
 
 .footer a {
     color: white;
     text-decoration: none;
-    margin: 0 15px;
 }
 
-/* Webkit Browsers (Chrome, Edge, Safari) */
+/* Responsive Scrollbar */
 ::-webkit-scrollbar {
-    width: 10px;
-    /* Slim scrollbar */
-    height: 10px;
-    /* For horizontal scrollbars */
+    width: 8px;
 }
 
-/* Fully Hide the Track */
 ::-webkit-scrollbar-track {
     background: transparent;
-    /* Completely transparent */
 }
 
-/* Scrollbar Handle (Draggable part) */
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, #4d5055, #1f282d);
-    /* Smooth blue gradient */
     border-radius: 50px;
-    /* Fully curved scrollbar */
     box-shadow: 0px 0px 8px rgba(58, 134, 255, 0.8);
-    /* Soft glow */
-    transition: all 0.3s ease-in-out;
 }
 
-/* Hover effect */
 ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, #0077b6, #023e8a);
-    /* Darker blue */
     box-shadow: 0px 0px 12px rgba(0, 119, 182, 1);
 }
 
-/* Firefox Support */
-html {
-    scrollbar-width: thin;
-    scrollbar-color: #232831 transparent;
-    background: transparent;
+/* Responsive Design */
+@media (min-width: 768px) {
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .support-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .feature-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }

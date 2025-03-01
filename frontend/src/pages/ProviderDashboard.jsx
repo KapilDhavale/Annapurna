@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import LogoutButton from "../components/LogoutButton";
-import {jwtDecode}from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
+import { FaBell, FaUserCircle } from "react-icons/fa";
+import logo_dark from "../images/logo_dark.png";
+import donation from "../images/donation.jpg";
+import "./ProviderDashboard.css";
 
 const ProviderDashboard = () => {
   const [donations, setDonations] = useState([]);
@@ -15,8 +19,10 @@ const ProviderDashboard = () => {
     latitude: "",
     longitude: "",
   });
+  // State for profile dropdown
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
-  // Decode the token to get the username
+  // Decode token to get username
   let userName = "Provider";
   const token = localStorage.getItem("token");
   if (token) {
@@ -31,9 +37,7 @@ const ProviderDashboard = () => {
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/donations", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         setDonations(response.data);
@@ -67,19 +71,26 @@ const ProviderDashboard = () => {
       },
       pickupLocation: {
         type: "Point",
-        coordinates: [parseFloat(formData.longitude), parseFloat(formData.latitude)],
+        coordinates: [
+          parseFloat(formData.longitude),
+          parseFloat(formData.latitude),
+        ],
         address: formData.address,
       },
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/api/donations", donationData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
+      const response = await axios.post(
+        "http://localhost:5000/api/donations",
+        donationData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      // Append new donation to list
       setDonations([...donations, response.data]);
       setFormData({
         foodType: "",
@@ -92,46 +103,147 @@ const ProviderDashboard = () => {
         longitude: "",
       });
     } catch (error) {
-      console.error("Error creating donation:", error.response ? error.response.data : error.message);
+      console.error(
+        "Error creating donation:",
+        error.response ? error.response.data : error.message
+      );
     }
   };
 
   return (
     <div>
-      <h1>Provider Dashboard</h1>
-      <LogoutButton />
-      <p>Welcome, {userName}! Manage your donations below:</p>
+      {/* Navbar Section */}
+      <nav className="navbar">
+        <div className="nav-left">
+          <img src={logo_dark} alt="Logo" className="logo" />
+        </div>
+        {/* Right Side - Icons and Profile Dropdown */}
+        <div className="nav-icons">
+          <div className="profile-dropdown-container">
+            <FaUserCircle
+              className="icon"
+              onClick={() => setProfileDropdownOpen((prev) => !prev)}
+            />
+            {profileDropdownOpen && (
+              <div className="profile-dropdown">
+                <LogoutButton />
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
 
-      <h2>Create a Donation</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="foodType" placeholder="Food Type" value={formData.foodType} onChange={handleChange} required />
-        <input type="text" name="description" placeholder="Description" value={formData.description} onChange={handleChange} required />
-        <input type="number" name="quantity" placeholder="Quantity" value={formData.quantity} onChange={handleChange} required />
-        <input type="date" name="expiryDate" value={formData.expiryDate} onChange={handleChange} required />
-        <label>
-          <input type="checkbox" name="packaged" checked={formData.packaged} onChange={handleChange} />
-          Packaged
-        </label>
-        <input type="text" name="address" placeholder="Pickup Address" value={formData.address} onChange={handleChange} required />
-        <input type="text" name="latitude" placeholder="Latitude" value={formData.latitude} onChange={handleChange} required />
-        <input type="text" name="longitude" placeholder="Longitude" value={formData.longitude} onChange={handleChange} required />
-        <button type="submit">Create Donation</button>
-      </form>
+      {/* Content Section with Background Image and Overlay */}
+      <div className="content-container">
+        <img src={donation} alt="Background" className="image" />
+        <div className="overlay">
+          <h1>Provider Dashboard</h1>
+          <p>Welcome, {userName}! Manage your donations below:</p>
 
-      <h2>My Donations</h2>
-      {donations.length === 0 ? (
-        <p>No donations found. Create a donation to get started.</p>
-      ) : (
-        <ul>
-          {donations.map((donation) => (
-            <li key={donation._id}>
-              <strong>{donation.foodDetails.foodType}</strong>: {donation.foodDetails.description} <br />
-              Quantity: {donation.foodDetails.quantity} | Status: {donation.status} <br />
-              Pickup: {donation.pickupLocation.address}
-            </li>
-          ))}
-        </ul>
-      )}
+          <h2>Create a Donation</h2>
+          <form onSubmit={handleSubmit} className="donation-form">
+            <input
+              type="text"
+              name="foodType"
+              placeholder="Food Type"
+              value={formData.foodType}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="description"
+              placeholder="Description"
+              value={formData.description}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="number"
+              name="quantity"
+              placeholder="Quantity"
+              value={formData.quantity}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="date"
+              name="expiryDate"
+              value={formData.expiryDate}
+              onChange={handleChange}
+              required
+            />
+            <label className="packaged-label">
+              <input
+                type="checkbox"
+                name="packaged"
+                checked={formData.packaged}
+                onChange={handleChange}
+              />
+              Packaged
+            </label>
+            <input
+              type="text"
+              name="address"
+              placeholder="Pickup Address"
+              value={formData.address}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="latitude"
+              placeholder="Latitude"
+              value={formData.latitude}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              name="longitude"
+              placeholder="Longitude"
+              value={formData.longitude}
+              onChange={handleChange}
+              required
+            />
+            <button type="submit">Create Donation</button>
+          </form>
+        </div>
+      </div>
+
+      {/* My Donations Section */}
+      <div className="donations-container">
+        <h2>My Donations</h2>
+        {donations.length === 0 ? (
+          <p>No donations found. Create a donation to get started.</p>
+        ) : (
+          <ul className="donation-list">
+            {donations.map((donation) => {
+              const statusClass =
+                donation.status === "pending" ? "available" : "collected";
+              const statusLabel =
+                donation.status === "pending" ? "AVAILABLE" : "COLLECTED";
+              return (
+                <li key={donation._id} className={`donation-item ${statusClass}`}>
+                  <div className="donation-info">
+                    <h3>{donation.foodDetails.foodType}</h3>
+                    <p>{donation.foodDetails.description}</p>
+                    <p>
+                      <strong>Quantity:</strong> {donation.foodDetails.quantity}
+                    </p>
+                    <p>
+                      <strong>Status:</strong> {statusLabel}
+                    </p>
+                    <p>
+                      <strong>Pickup:</strong> {donation.pickupLocation.address}
+                    </p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
     </div>
   );
 };

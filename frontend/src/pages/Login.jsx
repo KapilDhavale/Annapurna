@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { AuthContext } from "../context/AuthContext";
+import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -45,24 +46,39 @@ const Login = () => {
   };
 
   return (
-    <div className="login">
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <label>Email:</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-
-        <label>Password:</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-
-        {error && <p style={{ color: "red" }}>{error}</p>}
-
-        <button type="submit">Login</button>
+     <div className="login">
+      <div id="anna">LOGIN</div>
+      <div className="login-overlay"></div>
+      <form id="login-form" onSubmit={handleLogin}>
+        <div className="form-content">
+          <div className="input-container">
+            <label id="login-label">Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-container">
+            <label id="login-label">Password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          {error && <p className="alert">{error}</p>}
+        </div>
+        <button id="login-btn" type="submit">Login</button>
+        <p id="registerPrompt">
+          Don't have an account?{" "}
+          <button type="button" id="link-button-login" onClick={() => navigate("/register")}>
+            Register here
+          </button>
+        </p>
       </form>
-
-      <p>Don't have an account?</p>
-      <button onClick={() => navigate("/register")} style={{ marginTop: "10px" }}>
-        Register Here
-      </button>
     </div>
   );
 };

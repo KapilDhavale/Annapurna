@@ -1,0 +1,176 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    /* Uncomment and update if you have a background image */
+    background-image: url("../../public/login-bg.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: 2rem;
+    font-weight: bold;
+    /* margin-bottom: 20px; */
+    color: #141414;
+    position: relative;
+}
+
+.login h1{
+    color: #000000;
+    font-size: 2em;
+}
+.login-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* for Safari support */
+    z-index: 0;
+}
+
+
+#login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100vw;
+    height: 65vh;
+    /* max-width: 400px; */
+    /* padding: 20px; */
+    background-color: rgba(0, 29, 50, 0.406);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: rgb(0, 0, 0);
+    z-index: 2222;
+}
+
+.form-content {
+    background-color: rgba(143, 143, 143, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    width: 30vw;
+    height: 45vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+#login-label {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    font-weight: bold;
+    width: 100px;
+    /* Fixed width for labels */
+    text-align: right;
+    color: #000000;
+    border: none;
+}
+
+#anna{
+    font-size: 2em;
+    z-index: 1222;
+    color: #ffffff;
+}
+
+.input-container input {
+    flex: 1;
+    /* Makes the input take up the remaining space equally */
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+    transition: border 0.3s ease-in-out;
+}
+
+input:focus {
+    border: 1px solid #2d88ff;
+}
+
+#login-btn {
+    margin:10px;
+    padding: 10px 60px;
+    font-size: 1.5rem;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.7s ease;
+}
+
+#login-btn:hover {
+    background-color: #000000;
+    color: white;
+}
+
+
+.alert {
+    background-color: #ffdddd;
+    color: #ff0000;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+form p {
+    margin: 5px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
+/* Style any anchor tags if used elsewhere */
+form a {
+    color: #f09b28;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    margin: 0;
+}
+
+form a:hover {
+    color: #be6e00;
+    text-decoration: underline;
+}
+
+form a:active {
+    color: #1658a0;
+}
+
+/* Style the button to look like a link */
+#link-button-login {
+    letter-spacing: 1px;
+    background: none;
+    border: none;
+    color: #ea8900;
+    text-decoration: underline;
+    cursor: pointer;
+    font: inherit;
+    /* Inherit font styles from parent */
+    padding: 0;
+}
+
+#registerPrompt {
+    font-size: 0.6em;
+}
