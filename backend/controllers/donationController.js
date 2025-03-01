@@ -72,10 +72,11 @@ exports.getDonationsNear = async (req, res) => {
 
   try {
     const donations = await FoodDonation.find({
+      status: { $in: ["pending", "matched"] }, // Show only available donations
       pickupLocation: {
         $near: {
           $geometry: { type: "Point", coordinates: [parseFloat(lon), parseFloat(lat)] },
-          $maxDistance: parseInt(radius),
+          $maxDistance: parseInt(radius), // Radius in meters
         },
       },
     }).populate('donor', 'username email');
@@ -85,6 +86,7 @@ exports.getDonationsNear = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 // Assign a driver to a donation
 exports.assignDriver = async (req, res) => {

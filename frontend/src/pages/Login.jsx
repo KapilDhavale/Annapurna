@@ -23,7 +23,7 @@ const Login = () => {
       if (response.ok) {
         localStorage.setItem("token", data.token);
         const decoded = jwtDecode(data.token);
-        console.log('Decoded token:', decoded);
+        console.log("Decoded token:", decoded);
         login(data.token);
 
         if (decoded.role === "provider") {
@@ -46,16 +46,23 @@ const Login = () => {
 
   return (
     <div className="login">
+      <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <label>Email:</label>
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        
+
         <label>Password:</label>
         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
         <button type="submit">Login</button>
       </form>
+
+      <p>Don't have an account?</p>
+      <button onClick={() => navigate("/register")} style={{ marginTop: "10px" }}>
+        Register Here
+      </button>
     </div>
   );
 };
