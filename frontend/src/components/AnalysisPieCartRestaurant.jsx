@@ -55,7 +55,7 @@ const AnalysisPieChartRestaurant = React.memo(({ restaurants, measure, title }) 
 
   // Ensure the container has fixed dimensions so the chart is visible.
   return (
-    <div style={{ maxWidth: "500px", height: "300px", margin: "60px auto", textAlign: "center" }}>
+    <div style={{ Width: "600px", height: "400px", margin: "80px auto", textAlign: "center" }}>
       <h3>{title}</h3>
       <Pie data={chartData} options={options} />
     </div>

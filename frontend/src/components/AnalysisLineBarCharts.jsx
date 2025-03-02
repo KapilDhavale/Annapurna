@@ -59,14 +59,14 @@ const AnalysisLineBarCharts = React.memo(({ restaurants, measure, title }) => {
   }
 
   return (
-    <div style={{ maxWidth: "500px", margin: "20px auto", textAlign: "center" }}>
+    <div style={{ maxWidth: "100vw", margin: "20px auto", textAlign: "center" }}>
       <h3>{title}</h3>
       <div style={{ display: "flex", gap: "20px", justifyContent: "center" }}>
-        <div style={{ flex: 1, minWidth: "200px", height: "300px" }}>
+        <div style={{ flex: 1, Width: "800px", height: "500px" }}>
           <h4>Line Chart</h4>
           <Line data={chartData} options={options} />
         </div>
-        <div style={{ flex: 1, minWidth: "200px", height: "300px" }}>
+        <div style={{ flex: 1, Width: "800px", height: "400px" }}>
           <h4>Bar Chart</h4>
           <Bar data={chartData} options={options} />
         </div>

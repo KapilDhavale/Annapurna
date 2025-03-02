@@ -1,0 +1,37 @@
+:root {
+    --primary-text: #333;
+    --background: #fff;
+    --border-color: #ddd;
+    --box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    --accent-color: #007bff;
+    --transition-duration: 0.3s;
+}
+
+.analysis-pie-chart__container {
+    max-width: 600px;
+    margin: 80px auto;
+    text-align: center;
+    background-color: var(--background);
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--box-shadow);
+    border-radius: 8px;
+}
+
+.analysis-pie-chart__title {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--primary-text);
+}
+
+.analysis-pie-chart__chart {
+    position: relative;
+    height: 400px;
+}
+
+.analysis-pie-chart__fallback {
+    text-align: center;
+    color: red;
+    padding: 20px;
+    font-size: 1.2rem;
+}

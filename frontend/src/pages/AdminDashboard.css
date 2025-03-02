@@ -1,14 +1,37 @@
-/* ---------------------------
-   Navbar styling
------------------------------- */
+/* Define custom properties for colors, fonts, and spacing */
+:root {
+  --primary-color: #222;
+  --secondary-color: #fff;
+  --accent-color: #007bff;
+  --light-gray: #f9f9f9;
+  --border-color: #ddd;
+  --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --font-family: 'Helvetica Neue', Arial, sans-serif;
+  --transition-duration: 0.3s;
+}
+
+/* Global styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  background-color: var(--secondary-color);
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Navbar styling */
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #222;
-  color: #fff;
-  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  padding: 12px 24px;
   z-index: 1000;
   display: flex;
   justify-content: space-between;
@@ -16,8 +39,7 @@
 }
 
 .nav-left .logo {
-  width: 100px;
-  height: auto;
+  width: 120px;
 }
 
 .nav-icons {
@@ -29,52 +51,42 @@
 .icon {
   font-size: 24px;
   cursor: pointer;
+  transition: color var(--transition-duration);
 }
 
-/* ---------------------------
-   Global & Heading styles
------------------------------- */
-body, div {
-  font-family: Arial, sans-serif;
+.icon:hover {
+  color: var(--accent-color);
 }
 
-h1, h2, h3 {
-  text-align: center;
-  font-weight: bold;
-}
-
-/* Margin top to avoid overlap with fixed navbar */
+/* Ensure content doesn't hide behind fixed navbar */
 h1 {
-  margin-top: 120px;
+  margin-top: 100px;
+  text-align: center;
 }
 
-/* ---------------------------
-   Donations list styling
------------------------------- */
+/* List styling */
 ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
 }
 
 li {
-  background-color: #f9f9f9;
-  padding: 10px;
+  padding: 12px;
   margin: 10px 0;
   border-radius: 5px;
+  border: 1px solid var(--border-color);
 }
 
-/* ---------------------------
-   NGO Details Section
------------------------------- */
+/* NGO Details Section */
 .ngo-details {
-  display: block;
-  width: 80%;
+  width: 90%;
   max-width: 800px;
-  margin: 20px auto;
+  margin: 30px auto;
   padding: 20px;
-  border: 1px solid #ddd;
-  text-align: center;
+  border: 1px solid var(--border-color);
   border-radius: 5px;
+  text-align: center;
+  background-color: var(--secondary-color);
 }
 
 /* Container for NGO details inner columns */
@@ -85,22 +97,22 @@ li {
   margin-top: 20px;
 }
 
-/* Left side: Restaurant Cards */
-.details-left {
+.details-left,
+.details-right {
   flex: 1;
 }
 
 /* Right side: Charts */
 .details-right {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #e9f7fe;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-/* ---------------------------
-   NGO Bars Styling
------------------------------- */
+/* NGO Bars Styling with gradient */
 .ngo-bars {
   display: flex;
   flex-wrap: wrap;
@@ -110,39 +122,38 @@ li {
 }
 
 .ngo-bar {
-  border: 1px solid #ccc;
-  padding: 10px;
+  border: 1px solid var(--border-color);
+  padding: 12px;
   width: 220px;
   cursor: pointer;
   border-radius: 5px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* Professional gradient: subtle white-to-light-gray */
+  background: linear-gradient(135deg, #ffffff, #f0f0f0);
+  transition: transform var(--transition-duration), box-shadow var(--transition-duration);
 }
 
 .ngo-bar:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
 }
 
 .ngo-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: aliceblue;
+  background-color: #f0f8ff;
   padding: 10px;
   border-radius: 5px;
 }
 
-/* Ensure equal space for NGO name and location */
 .ngo-info > div {
   flex: 1;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: bold;
 }
 
-/* ---------------------------
-   Restaurant Cards Styling
------------------------------- */
+/* Restaurant Cards Styling with gradient */
 .restaurant-cards {
   display: flex;
   flex-wrap: wrap;
@@ -152,14 +163,14 @@ li {
 }
 
 .restaurant-card {
-  background-color: #f8f8f8;
-  border: 1px solid #ddd;
+  /* Professional gradient: subtle white-to-light-gray */
+  background: linear-gradient(135deg, #ffffff, #f8f8f8);
+  border: 1px solid var(--border-color);
   border-radius: 5px;
-  padding: 10px;
-  width: calc(50% - 15px); /* Two cards per row */
-  box-sizing: border-box;
+  padding: 12px;
+  width: calc(50% - 15px);
   text-align: left;
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-duration);
 }
 
 .restaurant-card:hover {
@@ -168,22 +179,70 @@ li {
 
 /* Responsive: on small screens, stack cards in one column */
 @media screen and (max-width: 768px) {
-  .restaurant-card {
-    width: 100%;
-  }
+  .restaurant-card,
   .ngo-bar {
     width: 100%;
   }
+
   .details-container {
     flex-direction: column;
   }
 }
 
-/* ---------------------------
-   Chart Container Styling
------------------------------- */
+/* Chart Container Styling */
 .chart-container {
   max-width: 500px;
   margin: 0 auto;
   text-align: center;
+}
+
+/* Additional styling for buttons */
+button {
+  background-color: var(--accent-color);
+  color: var(--secondary-color);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color var(--transition-duration);
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Form styling (e.g., in join campaign form) */
+form {
+  margin: 20px 0;
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0 12px 0;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+}
+
+/* Footer styling for support section */
+.footer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  flex-wrap: wrap;
+}
+
+.footer a {
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color var(--transition-duration);
+}
+
+.footer a:hover {
+  color: var(--accent-color);
 }

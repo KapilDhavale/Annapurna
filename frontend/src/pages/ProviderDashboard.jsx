@@ -1,7 +1,7 @@
 // frontend/src/pages/ProviderDashboard.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LogoutButton from "../components/LogoutButton";
 import {jwtDecode} from "jwt-decode"; // Fixed import; no destructuring needed
 import { FaBell, FaUserCircle } from "react-icons/fa";
@@ -23,6 +23,8 @@ const ProviderDashboard = () => {
   });
   // State for profile dropdown
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   // Decode token to get username
   let userName = "Provider";
@@ -119,15 +121,22 @@ const ProviderDashboard = () => {
         <div className="nav-left">
           <img src={logo_dark} alt="Logo" className="logo" />
         </div>
-        {/* Right Side - Icons, Campaign Button and Profile Dropdown */}
+        {/* Right Side - Icons and Buttons */}
         <div className="nav-icons">
-          {/* New Create Campaign Button */}
-          <Link to="/campaign" className="campaign-button">
+          <button
+            id="create-campaign-btn"
+            className="nav-button create-campaign-button"
+            onClick={() => navigate("/campaign")}
+          >
             Create Campaign
-          </Link>
-           <Link to="/ongoing-campaigns" className="ongoing-campaigns-button">
-      Ongoing Campaigns
-    </Link>
+          </button>
+          <button
+            id="ongoing-campaign-btn"
+            className="nav-button ongoing-campaigns-button"
+            onClick={() => navigate("/ongoing-campaigns")}
+          >
+            Ongoing Campaigns
+          </button>
           <FaBell className="icon" />
           <div className="profile-dropdown-container">
             <FaUserCircle
@@ -147,8 +156,11 @@ const ProviderDashboard = () => {
       <div className="content-container">
         <img src={donation} alt="Background" className="image" />
         <div className="overlay">
-          <h1>Provider Dashboard</h1>
-          <p>Welcome, {userName}! Manage your donations below:</p>
+          <div id="provider-main">
+         <p>
+  Welcome, <span className="highlighted-text">{userName}</span>! Manage your donations below:
+</p>
+
 
           <h2>Create a Donation</h2>
           <form onSubmit={handleSubmit} className="donation-form">
@@ -218,42 +230,52 @@ const ProviderDashboard = () => {
             />
             <button type="submit">Create Donation</button>
           </form>
+          </div>
         </div>
       </div>
 
       {/* My Donations Section */}
-      <div className="donations-container">
-        <h2>My Donations</h2>
-        {donations.length === 0 ? (
-          <p>No donations found. Create a donation to get started.</p>
-        ) : (
-          <ul className="donation-list">
-            {donations.map((donation) => {
-              const statusClass =
-                donation.status === "pending" ? "available" : "collected";
-              const statusLabel =
-                donation.status === "pending" ? "AVAILABLE" : "COLLECTED";
-              return (
-                <li key={donation._id} className={`donation-item ${statusClass}`}>
-                  <div className="donation-info">
-                    <h3>{donation.foodDetails.foodType}</h3>
-                    <p>{donation.foodDetails.description}</p>
-                    <p>
-                      <strong>Quantity:</strong> {donation.foodDetails.quantity}
-                    </p>
-                    <p>
-                      <strong>Status:</strong> {statusLabel}
-                    </p>
-                    <p>
-                      <strong>Pickup:</strong> {donation.pickupLocation.address}
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
+      {/* My Donations Section */}
+<div className="donations-container">
+  <h1>My Donations</h1>
+  {donations.length === 0 ? (
+    <p>No donations found. Create a donation to get started.</p>
+  ) : (
+    <ul className="donation-list">
+      {[...donations]
+        .sort((a, b) => {
+          // Sort so that available donations (status "pending") appear on top.
+          if (a.status === "pending" && b.status !== "pending") return -1;
+          if (a.status !== "pending" && b.status === "pending") return 1;
+          return 0;
+        })
+        .map((donation) => {
+          const statusClass =
+            donation.status === "pending" ? "available" : "collected";
+          const statusLabel =
+            donation.status === "pending" ? "AVAILABLE" : "COLLECTED";
+          return (
+            <li key={donation._id} className={`donation-item ${statusClass}`}>
+              <div className="donation-info">
+                <h3>{donation.foodDetails.foodType}</h3>
+                <p>{donation.foodDetails.description}</p>
+                <p>
+                  <strong>Quantity:</strong> {donation.foodDetails.quantity}
+                </p>
+                <p>
+                  <strong>Status:</strong> {statusLabel}
+                </p>
+                <p>
+                  <strong>Pickup:</strong> {donation.pickupLocation.address}
+                </p>
+              </div>
+            </li>
+          );
+        })}
+    </ul>
+  )}
+</div>
+
     </div>
   );
 };
