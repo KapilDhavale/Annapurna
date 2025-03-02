@@ -7,6 +7,10 @@ body {
     width: 100%;
 }
 
+#landing-btn{
+    background-color: rgb(15, 132, 15);
+}
+
 /* Navbar */
 .navbar {
     display: flex;

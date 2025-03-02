@@ -1,10 +1,9 @@
-// frontend/src/pages/Campaign.jsx
 import React, { useState, useContext, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext.jsx';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const Campaign = () => {
-  const { token } = useContext(AuthContext); // Ensure AuthContext provides the token
+  const { token } = useContext(AuthContext);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [targetQuantity, setTargetQuantity] = useState('');
@@ -14,7 +13,6 @@ const Campaign = () => {
   const [address, setAddress] = useState('');
   const [result, setResult] = useState('');
 
-  // Log and decode the JWT token when the component mounts or token changes
   useEffect(() => {
     if (token) {
       console.log('JWT Token:', token);
@@ -30,7 +28,6 @@ const Campaign = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Build campaign data from form fields
     const campaignData = {
       title,
       description,
@@ -42,7 +39,6 @@ const Campaign = () => {
       },
     };
 
-    // Log the campaign data and token to help debug
     console.log('Campaign Data:', campaignData);
     console.log('Using Token:', token);
 
@@ -51,7 +47,7 @@ const Campaign = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(campaignData),
       });
@@ -59,100 +55,110 @@ const Campaign = () => {
       const data = await response.json();
       console.log('Server Response:', data);
       setResult(JSON.stringify(data, null, 2));
+
+      if (response.ok) {
+        window.alert('Campaign created successfully!');
+      } else {
+        window.alert('Failed to create campaign: ' + data.message);
+      }
     } catch (error) {
       console.error('Error during campaign creation:', error);
-      setResult('Error: ' + error.message);
+      window.alert('Error: ' + error.message);
     }
   };
 
+  const containerStyle = {
+    maxWidth: '700px',
+    margin: '3em auto',
+    padding: '2em',
+    background: '#f9f9f9',
+    borderRadius: '10px',
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
+    fontFamily: 'Poppins, sans-serif',
+    color: 'black',
+  };
+
+  const formStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '15px',
+  };
+
+  const labelStyle = {
+    fontWeight: '600',
+    color: 'black',
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '10px',
+    fontSize: '16px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+    boxSizing: 'border-box',
+    color: 'black',
+  };
+
+  const textareaStyle = {
+    ...inputStyle,
+    resize: 'vertical',
+    minHeight: '100px',
+  };
+
+  const buttonStyle = {
+    background: '#007bff',
+    color: 'white',
+    fontSize: '18px',
+    fontWeight: 'bold',
+    padding: '12px',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    transition: 'background 0.3s ease-in-out',
+  };
+
   return (
-    <div style={{ margin: '2em' }}>
-      <h1>Create Campaign</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
+    <div style={containerStyle}>
+      <h1 style={{ textAlign: 'center', color: 'black' }}>Create Campaign</h1>
+      <form onSubmit={handleSubmit} style={formStyle}>
+        <label style={labelStyle}>
           Title:
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
+          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required style={inputStyle} />
         </label>
-        <br />
 
-        <label>
+        <label style={labelStyle}>
           Description:
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
+          <textarea value={description} onChange={(e) => setDescription(e.target.value)} required style={textareaStyle} />
         </label>
-        <br />
 
-        <label>
+        <label style={labelStyle}>
           Target Quantity:
-          <input
-            type="number"
-            value={targetQuantity}
-            onChange={(e) => setTargetQuantity(e.target.value)}
-            required
-          />
+          <input type="number" value={targetQuantity} onChange={(e) => setTargetQuantity(e.target.value)} required style={inputStyle} />
         </label>
-        <br />
 
-        <label>
+        <label style={labelStyle}>
           Expires At (Date & Time):
-          <input
-            type="datetime-local"
-            value={expiresAt}
-            onChange={(e) => setExpiresAt(e.target.value)}
-            required
-          />
+          <input type="datetime-local" value={expiresAt} onChange={(e) => setExpiresAt(e.target.value)} required style={inputStyle} />
         </label>
-        <br />
 
-        <h3>Location</h3>
-        <label>
+        <h3 style={{ color: 'black' }}>Location</h3>
+        <label style={labelStyle}>
           Longitude:
-          <input
-            type="number"
-            step="any"
-            value={longitude}
-            onChange={(e) => setLongitude(e.target.value)}
-            required
-          />
+          <input type="number" step="any" value={longitude} onChange={(e) => setLongitude(e.target.value)} required style={inputStyle} />
         </label>
-        <br />
 
-        <label>
+        <label style={labelStyle}>
           Latitude:
-          <input
-            type="number"
-            step="any"
-            value={latitude}
-            onChange={(e) => setLatitude(e.target.value)}
-            required
-          />
+          <input type="number" step="any" value={latitude} onChange={(e) => setLatitude(e.target.value)} required style={inputStyle} />
         </label>
-        <br />
 
-        <label>
+        <label style={labelStyle}>
           Address:
-          <input
-            type="text"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
+          <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} required style={inputStyle} />
         </label>
-        <br />
 
-        <button type="submit">Create Campaign</button>
+        <button type="submit" style={buttonStyle}>Create Campaign</button>
       </form>
-
-      <h2>Result</h2>
-      <pre>{result}</pre>
     </div>
   );
 };

@@ -38,7 +38,7 @@ const LandingPage = () => {
           <button className="nav-button" onClick={() => navigate("/register")}>
             Register
           </button>
-          <button className="nav-button" onClick={() => navigate("/login")}>
+          <button  id="landing-btn" className="nav-button" onClick={() => navigate("/login")}>
             Login
           </button>
         </div>
@@ -48,7 +48,7 @@ const LandingPage = () => {
           <div className="mobile-menu">
             <button onClick={() => navigate("/home")}>Home</button>
             <button onClick={() => navigate("/profile")}>Profile</button>
-            <button onClick={() => navigate("/login")}>Log Out</button>
+            <button id="landing-btn" onClick={() => navigate("/login")}>Log Out</button>
           </div>
         )}
       </nav>
