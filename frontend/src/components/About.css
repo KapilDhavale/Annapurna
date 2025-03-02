@@ -1,82 +1,152 @@
 /* About Section */
 #about {
-    background: linear-gradient(180deg, #d0c7b4, #c2ae85);
+    /* background: linear-gradient(180deg, #7dc6e1, #85bfc2); */
+    background-color: #edbb99;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 40px 10px;
-    text-align: center;
+    padding: 60px 20px;
+    text-align: justify;
+    font-family: 'Poppins', sans-serif;
 }
 
+/* About Header */
 #about-head {
     font-weight: 800;
     letter-spacing: 2px;
-    font-size: 1.8rem;
-}
-
-.about-us {
+    font-size: 2.1rem;
+    text-transform: uppercase;
     text-align: center;
+    margin-bottom: 30px;
+    color: #000000;
+}
+
+
+.about-content{
+    text-align: justify;
+    margin-bottom: 15px;
+}
+/* About Content Wrapper */
+.about-us {
+    width: 90%;
+    max-width: 900px;
+    background: rgba(115, 213, 255, 0.85);
     padding: 40px;
-    background: linear-gradient(180deg, #d0c7b4, #c2ae85);
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgb(0, 0, 0);
+    text-align: center;
 }
 
+/* Headings */
 .about-heading {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: bold;
+    text-align: center;
     margin-bottom: 20px;
+    color: #000000;
 }
 
-.about-content,
-.about-mission,
-.about-how-it-works,
-.about-join-us {
-    margin-bottom: 20px;
+/* Mission Section */
+.about-mission {
+    background: linear-gradient(135deg, #3eb84c, #1e8040);
+    color: white;
+    width: 100%;
+    max-width: 900px;
+    padding: 25px;
+    border-radius: 10px;
     font-size: 18px;
+    line-height: 1.6;
+    margin: 0 auto 30px;
+    box-sizing: border-box;
+    text-align: justify;
 }
 
+/* Section Headings */
 .mission-heading,
 .how-it-works-heading,
 .join-us-heading {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
+/* How It Works Section */
+.about-how-it-works {
+    width: 90%;
+    max-width: 800px;
+    margin: 40px auto;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* List Styling */
 .about-how-it-works ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
+    margin: 0;
+    width: 100%;
 }
 
+/* Individual List Items */
 .about-how-it-works li {
-    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    margin: 12px 0;
+    border-radius: 10px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    max-width: 600px;
+}
+
+/* Bold Text in List */
+.about-how-it-works li b {
+    color: #333;
     font-size: 18px;
 }
 
+/* Hover Effect */
+.about-how-it-works li:hover {
+    transform: translateY(-3px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Call-to-Action */
 .about-call-to-action {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     color: #ff6600;
+    text-align: center;
+    margin-top: 30px;
 }
 
 /* Transition Image Styling */
 .transition-image {
     text-align: center;
-    margin: 40px 0;
-    opacity: 0.5;
-    transform: translateY(50px);
+    margin: 50px 0;
+    transform: translateY(60px);
     transition: opacity 1s ease-out, transform 1s ease-out;
 }
 
 .transition-image img {
-    width: 80%;
+    width: 85%;
     max-width: 600px;
-    border-radius: 10px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Animation: Fade-in Effect */
+/* Fade-in Effect */
 .fade-in.visible {
     opacity: 1;
     transform: translateY(0);
@@ -84,17 +154,55 @@
 
 /* Left and Right Animations */
 .transition-image.left {
-    transform: translateX(-50px);
+    transform: translateX(-60px);
 }
 
 .transition-image.right {
-    transform: translateX(50px);
+    transform: translateX(60px);
 }
 
-.transition-image.left.visible {
-    transform: translateX(0);
-}
-
+.transition-image.left.visible,
 .transition-image.right.visible {
     transform: translateX(0);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    #about {
+        padding: 50px 15px;
+    }
+
+    #about-head {
+        font-size: 1.6rem;
+    }
+
+    .about-us {
+        padding: 30px;
+    }
+
+    .about-heading {
+        font-size: 22px;
+    }
+
+    .about-mission {
+        font-size: 16px;
+        padding: 20px;
+    }
+
+    .about-how-it-works {
+        padding: 25px;
+    }
+
+    .about-how-it-works li {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .about-call-to-action {
+        font-size: 18px;
+    }
+
+    .transition-image img {
+        width: 100%;
+    }
 }
