@@ -1,5 +1,6 @@
 const FoodDonation = require('../models/FoodDonation');
 const { sendSMS } = require('../utils/twilioNotification');
+const admin = require('../firebase'); // Firebase Admin instance
 
 // Create a new donation
 exports.createDonation = async (req, res) => {
@@ -33,6 +34,29 @@ exports.createDonation = async (req, res) => {
     const message = `New Donation Alert!\nFood: ${foodDetails.foodType}\nQuantity: ${foodDetails.quantity}\nPickup: ${pickupLocation.address}`;
     await sendSMS("+919082251379", message);
 
+    // Update Firebase Realtime Database with donation data
+    const donationData = donation.toObject ? donation.toObject() : donation;
+    await admin.database().ref(`donations/${donation._id}`).set(donationData);
+
+    // ---------------- Additional Code ----------------
+    // Combine donor's username and food description for the LCD display.
+    // Assuming foodDetails.foodType represents the food description.
+    const providerData = `${req.user.username}: ${foodDetails.foodType}`;
+    const foodProvidersRef = admin.database().ref('food_providers');
+    
+    // Retrieve current provider info from Firebase
+    const snapshot = await foodProvidersRef.once('value');
+    const data = snapshot.val();
+    // Rotate the display: previous provider1 moves to provider2.
+    const previousProvider1 = data && data.provider1 ? data.provider1 : "No Data";
+    
+    // Update the "food_providers" node so that provider1 is the latest donation info.
+    await foodProvidersRef.update({
+      provider1: providerData,
+      provider2: previousProvider1
+    });
+    // ---------------- End Additional Code ----------------
+
     res.status(201).json(donation);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -65,6 +89,10 @@ exports.updateDonationStatus = async (req, res) => {
     if (!donation) {
       return res.status(404).json({ error: 'Donation not found' });
     }
+
+    // Update only the status in Firebase
+    await admin.database().ref(`donations/${donation._id}`).update({ status: donation.status });
+
     res.json(donation);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -114,6 +142,13 @@ exports.assignDriver = async (req, res) => {
     donation.pickupTime = new Date();
     await donation.save();
 
+    // Update Firebase with the new assignment details
+    await admin.database().ref(`donations/${donation._id}`).update({
+      assignedDriver: donation.assignedDriver,
+      status: donation.status,
+      pickupTime: donation.pickupTime,
+    });
+
     res.json(donation);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -123,7 +158,6 @@ exports.assignDriver = async (req, res) => {
 // Fetch donations for the logged-in provider
 exports.getProviderDonations = async (req, res) => {
   try {
-    // Use req.user.id (set by your auth middleware) to filter donations
     const donations = await FoodDonation.find({ donor: req.user.id });
     res.json({ success: true, donations });
   } catch (error) {
