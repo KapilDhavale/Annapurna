@@ -1,7 +1,9 @@
+// frontend/src/pages/ProviderDashboard.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import LogoutButton from "../components/LogoutButton";
-import { jwtDecode } from "jwt-decode";
+import {jwtDecode} from "jwt-decode"; // Fixed import; no destructuring needed
 import { FaBell, FaUserCircle } from "react-icons/fa";
 import logo_dark from "../images/logo_dark.png";
 import donation from "../images/donation.jpg";
@@ -117,8 +119,16 @@ const ProviderDashboard = () => {
         <div className="nav-left">
           <img src={logo_dark} alt="Logo" className="logo" />
         </div>
-        {/* Right Side - Icons and Profile Dropdown */}
+        {/* Right Side - Icons, Campaign Button and Profile Dropdown */}
         <div className="nav-icons">
+          {/* New Create Campaign Button */}
+          <Link to="/campaign" className="campaign-button">
+            Create Campaign
+          </Link>
+           <Link to="/ongoing-campaigns" className="ongoing-campaigns-button">
+      Ongoing Campaigns
+    </Link>
+          <FaBell className="icon" />
           <div className="profile-dropdown-container">
             <FaUserCircle
               className="icon"

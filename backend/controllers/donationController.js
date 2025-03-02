@@ -19,7 +19,7 @@ exports.createDonation = async (req, res) => {
     ];
 
     const donation = new FoodDonation({
-      donor: req.user.id, // Changed _id to id
+      donor: req.user.id, // Use req.user.id (from token)
       foodDetails,
       pickupLocation: {
         type: 'Point',
@@ -78,7 +78,7 @@ exports.getDonationsNear = async (req, res) => {
     return res.status(400).json({ error: "Please provide lat, lon, and radius as query parameters" });
   }
   try {
-    // Make sure that the coordinates in the query and in the DB follow [lon, lat] order.
+    // Coordinates are in [lon, lat] order.
     const donations = await FoodDonation.find({
       status: { $in: ["pending", "matched"] },
       pickupLocation: {
@@ -117,5 +117,16 @@ exports.assignDriver = async (req, res) => {
     res.json(donation);
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+};
+
+// Fetch donations for the logged-in provider
+exports.getProviderDonations = async (req, res) => {
+  try {
+    // Use req.user.id (set by your auth middleware) to filter donations
+    const donations = await FoodDonation.find({ donor: req.user.id });
+    res.json({ success: true, donations });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };

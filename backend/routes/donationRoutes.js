@@ -6,6 +6,7 @@ const {
   updateDonationStatus,
   getDonationsNear,
   assignDriver,
+  getProviderDonations,
 } = require('../controllers/donationController');
 const { protect } = require('../middleware/auth');
 
@@ -15,12 +16,14 @@ router.post('/', protect, createDonation);
 // Retrieve all donations (authenticated users)
 router.get('/', protect, getDonations);
 
+// Retrieve donations for the logged-in provider
+router.get('/provider', protect, getProviderDonations);
+
 // Update donation status
 router.put('/:id', protect, updateDonationStatus);
 
 // Get donations near a specific location
 router.get('/near', protect, getDonationsNear);
-
 
 // Assign a driver to a donation
 router.put('/assign/:donationId', protect, assignDriver);

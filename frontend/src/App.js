@@ -8,6 +8,8 @@ import ProviderDashboard from './pages/ProviderDashboard';
 import ReceiverDashboard from './pages/ReceiverDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import MapsPage from './components/MapsPage';
+import Campaign from './pages/Campaign';
+import OngoingCampaigns from './pages/OngoingCampaigns';
 import { AuthProvider } from './context/AuthContext.jsx';
 
 function App() {
@@ -22,6 +24,8 @@ function App() {
           <Route path="/receiver-dashboard" element={<ReceiverDashboard />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/maps" element={<MapsPage />} />
+          <Route path="/campaign" element={<Campaign />} />
+          <Route path="/ongoing-campaigns" element={<OngoingCampaigns />} />
         </Routes>
       </Router>
     </AuthProvider>

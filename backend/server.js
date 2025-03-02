@@ -5,6 +5,8 @@ const connectDB = require('./config/db');
 
 const authRoutes = require('./routes/authRoutes');
 const donationRoutes = require('./routes/donationRoutes');
+const campaignRoutes = require('./routes/campaignRoutes');
+
 
 const app = express();
 
@@ -18,6 +20,8 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/donations', donationRoutes);
+app.use('/api/campaigns', campaignRoutes);
+
 
 app.get('/', (req, res) => {
   res.send('API is running...');
