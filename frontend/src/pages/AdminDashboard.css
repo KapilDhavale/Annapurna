@@ -1,0 +1,189 @@
+/* ---------------------------
+   Navbar styling
+------------------------------ */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #222;
+  color: #fff;
+  padding: 10px 20px;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-left .logo {
+  width: 100px;
+  height: auto;
+}
+
+.nav-icons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.icon {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* ---------------------------
+   Global & Heading styles
+------------------------------ */
+body, div {
+  font-family: Arial, sans-serif;
+}
+
+h1, h2, h3 {
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Margin top to avoid overlap with fixed navbar */
+h1 {
+  margin-top: 120px;
+}
+
+/* ---------------------------
+   Donations list styling
+------------------------------ */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+
+/* ---------------------------
+   NGO Details Section
+------------------------------ */
+.ngo-details {
+  display: block;
+  width: 80%;
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  text-align: center;
+  border-radius: 5px;
+}
+
+/* Container for NGO details inner columns */
+.details-container {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+/* Left side: Restaurant Cards */
+.details-left {
+  flex: 1;
+}
+
+/* Right side: Charts */
+.details-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ---------------------------
+   NGO Bars Styling
+------------------------------ */
+.ngo-bars {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin: 30px 0;
+}
+
+.ngo-bar {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 220px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ngo-bar:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ngo-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: aliceblue;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Ensure equal space for NGO name and location */
+.ngo-info > div {
+  flex: 1;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* ---------------------------
+   Restaurant Cards Styling
+------------------------------ */
+.restaurant-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.restaurant-card {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  width: calc(50% - 15px); /* Two cards per row */
+  box-sizing: border-box;
+  text-align: left;
+  transition: transform 0.3s ease;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Responsive: on small screens, stack cards in one column */
+@media screen and (max-width: 768px) {
+  .restaurant-card {
+    width: 100%;
+  }
+  .ngo-bar {
+    width: 100%;
+  }
+  .details-container {
+    flex-direction: column;
+  }
+}
+
+/* ---------------------------
+   Chart Container Styling
+------------------------------ */
+.chart-container {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
